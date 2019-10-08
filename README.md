@@ -1,5 +1,5 @@
 # TisCoMM
-
+A tissue-specific collaborative mixed model for jointly analyzing multiple tissues in transcriptome-wide association studies.
 
 **TisCoMM** package proves a 
 
@@ -20,4 +20,4 @@ library(TisCoMM)
  
 
 ## Reference
- 
+[A tissue-specific collaborative mixed model for jointly analyzing multiple tissues in transcriptome-wide association studies](https://www.biorxiv.org/content/10.1101/789396v1) 
