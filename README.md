@@ -16,7 +16,7 @@ install_github("XingjieShi/TisCoMM")
 library(TisCoMM)
 ?TisCoMM
 ```
-## Replicate simulation results in Shi et al. (2018)
+## Replicate simulation results in Shi et al. (2019)
  
 
 ## Reference
