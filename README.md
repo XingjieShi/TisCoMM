@@ -17,6 +17,20 @@ library(TisCoMM)
 ?TisCoMM
 ```
 ## Replicate simulation results in Shi et al. (2019)
+All the simulation results can be reproduced by using the code at simulation. Before running simulation to reproduce the results, please familarize yourself with **TisCoMM** using 'TisCoMM' vignette. 
+
+1. Simulation results for multi-tissue joint test can be reproduced by following steps:
+
+    - ExampleOne.R: This function can be run in a HPC cluster (with minor revisions, it could be run on a PC), it will output files, named pvalue_hz0.1_hc0.25_rhoX5_s5_batch-6.txt, which contain inference results of each replicate, for all multi-tissue TWAS  methods: TisCoMM, TisCoMM-S$^2$, MultiXcan, S-MultiXcan and UTMOST. 
+
+
+    - ExampleOnePlot.R: This function produces simulation figures of joint test in Shi et al. (2019).
+
+2. Simulation results for tissue-specific test can be reproduced by following steps:
+
+     - PartCoMMCOR.R: This function can be run in a HPC cluster (with minor revisions, it could be run on a PC), it will output files, named part_hc4_rhoX8_rhoW8nz_ti2_batch-2.rds, which contain inference results of each replicate, for all single-tissue TWAS methods: CoMM, PrediXcan, and TWAS. 
+     
+    - SummaryCOR.R: This function produces simulation figures of tissue-specific test in Shi et al. (2019).
  
 
 ## Reference

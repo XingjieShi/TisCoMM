@@ -205,7 +205,7 @@ There are other three arguments.
 # Replicate simulation results in Shi et al. (2019)
 All the simulation results can be reproduced by using the code at simulation. Before running simulation to reproduce the results, please familarize yourself with **TisCoMM** using 'TisCoMM' vignette. 
 
-1. Simulation results for joint test can be reproduced by following steps:
+1. Simulation results for multi-tissue joint can be reproduced by following steps:
 
     - ExampleOne.R: This function can be run in a HPC cluster (with minor revisions, it could be run on a PC), it will output files, named pvalue_hz0.1_hc0.25_rhoX5_s5_batch-6.txt, which contain inference results of each replicate, for all multi-tissue TWAS  methods: TisCoMM, TisCoMM-S$^2$, MultiXcan, S-MultiXcan and UTMOST. 
 
