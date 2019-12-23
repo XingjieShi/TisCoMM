@@ -17,7 +17,7 @@ library(TisCoMM)
 ?TisCoMM
 ```
 ## Replicate simulation results in Shi et al. (2019)
-All the simulation results can be reproduced by using the code at simulation. Before running simulation to reproduce the results, please familarize yourself with **TisCoMM** using 'TisCoMM' vignette. 
+All the simulation results can be reproduced by using the code at [simulation](https://github.com/XingjieShi/TisCoMM/tree/master/simulation). Before running simulation to reproduce the results, please familarize yourself with **TisCoMM** using 'TisCoMM' vignette. 
 
 1. Simulation results for multi-tissue joint test can be reproduced by following steps:
 
