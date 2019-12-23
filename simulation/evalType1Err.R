@@ -3,10 +3,11 @@
 library(mvtnorm)
 library(GBJ)
 library(Rcpp)
+library(TisCoMM)
 source("functions.r")  
 source("multiEstB.R")
-sourceCpp("PXem_ss.cpp")
-sourceCpp("PXem.cpp")
+#sourceCpp("PXem_ss.cpp")
+#sourceCpp("PXem.cpp")
 
 evalType1Err <- function(h_z, h_c, s, rhoX, rhoE, Ti, batch, Rep = 1000)
 {
