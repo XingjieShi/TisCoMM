@@ -313,7 +313,7 @@ fit <- mammotSS_part_paral(file1, file2, file3, file4, file5,
 Compared with the input for gene-trait association test, there is a new arguments "targetList". It is a character vecter containing genes' names. Note that it should be the same identifiers as "targetID" in the eQTL data. In general, You can perform the tissue-specific test on any genes. Usually, we would like to focus on genes which are significantly associated with the trait.
 
 # Replicate simulation results in Shi et al. (2020)
-All the simulation results can be reproduced by using the code at [simulation](https://github.com/XingjieShi/TisCoMM/tree/master/simulation). Before running simulation to reproduce the results, please familarize yourself with **TisCoMM** using 'TisCoMM User Manual'. 
+All the simulation results can be reproduced by using the code at [simulation](https://github.com/XingjieShi/TisCoMM/tree/master/simulation). Before running simulation to reproduce the results, please familiarize yourself with **TisCoMM** using 'TisCoMM User Manual'. 
 
 1. Simulation results for multi-tissue joint can be reproduced by following steps:
 
