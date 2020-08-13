@@ -1,8 +1,12 @@
 ---
-title: "A tissue-specific collaborative mixed model for jointly analyzing multiple tissues in transcriptome-wide association studies"
-author: "Xingjie Shi"
+title: "TisCoMM User Manual"
+author: |
+  | Xingjie Shi
+  | shixingjie0615@gmail.com
 date: "`r Sys.Date()`"
 output: rmarkdown::pdf_document
+urlcolor: blue
+toc: true
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,8 +20,39 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Introduction
 **TisCoMM** package provides a unified probabilistic model for TWAS, leveraging the co-regulation of genetic variations across different tissues explicitly. **TisCoMM** not only performs hypothesis testing to prioritize gene-trait associations,
  but also detects the tissue-specific role of candidate target genes in complex traits. To make use of widely available GWAS summary statistics, TisCoMM is extended to use summary-level data, namely, TisCoMM-S$^2$ . 
+
+## Models
+TisCoMM tests for gene-trait associations one gene at a time. Assume $\mathcal{D}_1=\{\mathbf Y_g, \mathbf X_{1g}\}$ denote the reference transcriptome data set of gene $g$ for $n_1$ samples over $T$ tissues, e.g. $\mathbf Y_g\in \mathbb{R}^{n_1\times T}$ is the  expression matrix for this gene over $T$ tissues, $\mathbf X_{1g}\in \mathbb{R}^{n_1\times M_g}$ is the genotype matrix for cis-SNPs within this gene. Denote the GWAS data $\mathcal{D}_2=\{\mathbf z, \mathbf X_{2g}\}$, where $\mathbf z$ is an $n_2\times 1$ vector of phenotypic values, $\mathbf X_{2g}$ is the genotype matrix for $M_g$ cis-SNPs.
+
+To simplify notation we will omit the subscript $g$ in all the expression that has dependence on gene $g$. Our model is
+$$
+\begin{aligned}
+\mathbf Y &=  \mathbf X_{1}\mathbf B+\mathbf E, 	 \\
+\mathbf z &=  \mathbf X_{2}\mathbf B\mathbf \alpha + \mathbf e_z, 
+\end{aligned}
+$$
+
+where $\mathbf \alpha\in\mathbb R^T$, $\mathbf E\sim\mathcal{MN}(0, \mathbf I_{m}, \mathbf V_e)$, and $\mathbf e_z\sim\mathcal{N}(0,\sigma^2\mathbf I_n)$. Note that we assume $\mathcal{D}_1$ and $\mathcal{D}_2$ are centered and thus intercepts can be omitted. 
+
+## Statistical Inference in TisCoMM
+Problem:
+
+1. Parameter Estimation: $\mathbf V_e, \sigma_b^2, \sigma^2, \mathbf\alpha$;
+
+2. (testing gene-trait association)  do joint testing: $\mathbf \alpha = 0$ to detect significant candidate genes;
+
+3. (testing tissue-specific effects) for significant genes only, do tissue-specific tesing: $\alpha_{t} = 0$, $t = 1, \dots T$.
+
+Methods:
+
+- the EM algorithm with parameter expansion (Liu et al. 1998, Biometrika)
+
+- the log-likelihood ratio test (LRT) 
+
+- multiple testing ($p$-values $\leq 5\times 10^{-6}$ for joint test)
 
 ## Installation
 To install the development version of **TisCoMM**, it's easiest to use the 'devtools' package. Note that **TisCoMM** depends on the 'Rcpp' package, which also requires appropriate setting of Rtools and Xcode for Windows and Mac OS/X, respectively.
@@ -27,19 +62,23 @@ library(devtools)
 install_github("XingjieShi/TisCoMM")
 ```
 
-# Real Data Analysis
-## Preparing eQTL data
+# Real Data Analysis with GWAS Individual Data
+## 1. Preparing eQTL data
 The eQTL data consists of matched genotype data and gene expression data in multiple target tissues. 
-\begin{enumerate}
-    \item Genotype data of the eQTL samples in the PLINK binary format (.\textbf{bed}), and must be accompanied by .\textbf{bim} and .\textbf{fam} files with the same prefix. For example:
+
+### Genotype data ($\mathbf X_1$)
+Genotype data of the eQTL samples in the PLINK binary format (.\textbf{bed}), and must be accompanied by .\textbf{bim} and .\textbf{fam} files with the same prefix. For example:
     \begin{itemize}
         \item GTEx.bed,
         \item GTEx.bim,
         \item GTEx.fam.
     \end{itemize}
-  
     
-    \item Expression data for all target tissues. Please note that gene expression in each tissue should be normaized to remove all confounding effects. Each tissue file should be a \textbf{tab-delimited} text file and include following information for each gene:
+### Gene expression across multiple tissues ($\mathbf Y_1$)
+\begin{itemize}
+\item Please note that gene expression in each tissue should be previously normalized for covariates which may confound the eQTL associations. We can achieve this by regressing the phenotypes (gene expressions) on the covariates and use the residuals as new phenotypes. After peforming this procedures for all the tissues, they can be specified as input of TisCoMM. 
+
+\item Each tissue file should be a \textbf{tab-delimited} text file and include following information for each gene:
     \begin{itemize}
         \item Start location
         \item End location
@@ -50,9 +89,9 @@ The eQTL data consists of matched genotype data and gene expression data in mult
         \item normalized expression levels cross samples
     \end{itemize}
     If some gene annotation is not included in the original gene expression file, one will have to extract these information by performing gene ID mapping with other annotation files. GENCODE (\href{https://www.gencodegenes.org/human/}{https://www.gencodegenes.org/human/}) provides comprehensive gene annotation files.	
-\end{enumerate}
  
- \textit{TisCoMM} will use the headers in the expression files to extract information. It is required to have specific columns in all the formatted expression file. See Table \ref{tab:ge} for a demonstration. Note that the first six column names should be exactly the same as those in Table \ref{tab:ge}. Expression levels across individuals should be appended after the first six columns.
+\item \textit{TisCoMM} will use the headers in the expression files to extract information. It is required to have specific columns in all the formatted expression file.  See Table \ref{tab:ge} for a demonstration. Note that the first six column names should be exactly the same as those in Table \ref{tab:ge}. Expression levels across individuals should be appended after the first six columns.
+
 \begin{table}[ht]
 \centering
 \caption{The first three rows and eight columns in an example gene expression file (rows for genes, and columns after the first six columns for samples).}
@@ -68,20 +107,20 @@ The eQTL data consists of matched genotype data and gene expression data in mult
    \hline
 \end{tabular}
 \end{table}
+
 After this step, we will have the eQTL gene expression files:
 \begin{itemize}
     \item Skin\_Sun\_Exposed\_Lower\_leg\_gene\_expression.txt
     \item Whole\_Blood\_gene\_expression.txt
 \end{itemize} 
-  
-
+\end{itemize}
  
-## Preparing GWAS data
+## 2. Preparing GWAS data
 TisCoMM can handle two different types of GWAS input dataset, the individual level data and summary statistics. There are some difference between these two types of input, here we discuss them separately.
 
 
 ### Formatting GWAS individual data
-The GWAS individual data files consist of genotype and phenotype data for all GWAS samples. They should be in the PLINK binary format. For example:
+The GWAS individual data files consist of genotype ($\mathbf X_2$) and phenotype data $\mathbf z$ for all GWAS samples. They should be in the PLINK binary format. For example:
 \begin{itemize}
     \item NFBC1966.bed,
     \item NFBC1966.bim,
@@ -90,45 +129,9 @@ The GWAS individual data files consist of genotype and phenotype data for all GW
 
 You could optionally add the covariate file, which contains all confounding covariates used to adjust population stratification in the GWAS data. The covariate file should be formatted in a similar manner to the plink phenotype file, which should also be a \textbf{tab-delimited} file. 
 
-### Formatting GWAS summary statisitc data
-
-1. Reference panel in the PLINK binary format (.\textbf{bed}, .\textbf{bim}, .\textbf{fam}).
- For example,
- \begin{itemize}
-     \item 1000G.bed,
-     \item 1000G.bim,
-     \item 1000G.fam.
- \end{itemize}
- 
-2. GWAS summary statistic data is required to have specific columns. See Table \ref{tab:gwasSS} for a demonstration. Note that all the column names should be exactly the same as those in Table \ref{tab:gwasSS}.If GWAS summary statistic in the original downloaded file do not come with all the information \textit{TisCoMM} needs, one will have to compute them manually. For example, if odds ratio is included, then beta can be computed as $\log(\text{Odds Ratio})$. Assume our interested trait is the late-onset Alzheimer's disease (LOAD), and we download the summary statistic file from \href{http://web.pasteur-lille.fr/en/recherche/u744/igap/igap_download.php}{http://web.pasteur-lille.fr/en/recherche/u744/igap/igap\_download.php}. After this step, the summary statistic is formatted correctly in following file:
-\begin{itemize}
-    \item LOAD.txt
-\end{itemize}
-
-\begin{table}[ht]
-\centering
-\caption{An example for the GWAS summary statistics.}
-\label{tab:gwasSS}
-\begin{tabular}{ccccccc}
-  \hline
-  SNP & chr & BP & A1 & A2 & beta & se \\ 
-  \hline
-rs3094315 &     1 & 752566 & G & A & -0.0122 & 0.0294 \\ 
-rs3128117 &     1 & 944564 & C & T & -0.0208 & 0.0278 \\ 
-rs1891906 &     1 & 950243 & C & A & -0.0264 & 0.0260 \\ 
-rs2710888 &     1 & 959842 & T & C & -0.0439 & 0.0297 \\ 
-rs4970393 &     1 & 962606 & G & A & -0.0252 & 0.0233 \\ 
-rs7526076 &     1 & 998395 & A & G & -0.0512 & 0.0229 \\ 
-  \vdots & \vdots &   \vdots & \vdots & \vdots & \vdots & \vdots  \\ 
-   \hline
-\end{tabular}
-\end{table}
 
 
-
- 
-
-## Fit TisCoMM for GWAS individual data  
+## 3. Testing gene-trait associations with GWAS individual data  
 ```{r, fig.show='hold', eval=FALSE}
 # eQTL genotype file
 file1 <- "GTEx_qc"
@@ -162,7 +165,84 @@ There are other three arguments.
     
 - corNum sets the number of threads the program will use. 
 
-## Fit TisCoMM for GWAS summary statistics
+
+## 4. Testing tissue-specific effects with GWAS individual data  
+```{r, fig.show='hold', eval=FALSE}
+# eQTL genotype file
+file1 <- "GTEx_qc"
+
+# GWAS individual level data
+file2 <- "NFBC1966_qc"
+
+# eQTL gene expression files
+file3 <- c("Skin_Sun_Exposed_Lower_leg_gene_expression.txt",
+           "Whole_Blood_gene_expression.txt")
+
+# eQTL covariates file. If normalized GE is provided, we do not need this file.
+file4 <- ""
+
+# GWAS covariates file
+file5 <- ""
+
+# genes (TargetID) on which we want to perform tissue-specific test.
+targetList  <- c("ENSG00000196666.3"
+                 "ENSG00000213619.5"
+                 "ENSG00000149187.13")
+
+wihchPheno <- 1
+bw         <- 5e5
+coreNum    <- 24
+
+fit <-mammot_part_paral(file1, file2, file3, file4, file5, 
+                   targetList, wihchPheno, bw, coreNum)
+```
+
+Compared with the input for gene-trait association test, there is a new arguments "targetList". It is a character vecter containing genes' names. Note that it should be the same identifiers as "targetID" in the eQTL data. In general, You can perform the tissue-specific test on any genes. Usually, we would like to focus on genes which are significantly associated with the trait.
+
+
+# Real Data Analysis with GWAS Summary Statisitc Data
+## 1. Preparing eQTL data
+This step is the same as analysis with GWAS individual data. 
+
+## 2. Formatting GWAS summary statisitc data
+
+### Reference panel ($\mathbf X_r$)
+Reference panel in the PLINK binary format (.\textbf{bed}, .\textbf{bim}, .\textbf{fam}).
+ For example,
+ \begin{itemize}
+     \item 1000G.bed,
+     \item 1000G.bim,
+     \item 1000G.fam.
+ \end{itemize}
+ 
+### GWAS summary statistic data
+GWAS summary statistic data is required to have specific columns. See Table \ref{tab:gwasSS} for a demonstration. Note that all the column names should be exactly the same as those in Table \ref{tab:gwasSS}.If GWAS summary statistic in the original downloaded file do not come with all the information \textit{TisCoMM} needs, one will have to compute them manually. For example, if odds ratio is included, then beta can be computed as $\log(\text{Odds Ratio})$. Assume our interested trait is the late-onset Alzheimer's disease (LOAD), and we download the summary statistic file from \href{http://web.pasteur-lille.fr/en/recherche/u744/igap/igap_download.php}{http://web.pasteur-lille.fr/en/recherche/u744/igap/igap\_download.php}. After this step, the summary statistic is formatted correctly in following file:
+\begin{itemize}
+    \item LOAD.txt
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\caption{An example for the GWAS summary statistics.}
+\label{tab:gwasSS}
+\begin{tabular}{ccccccc}
+  \hline
+  SNP & chr & BP & A1 & A2 & beta & se \\ 
+  \hline
+rs3094315 &     1 & 752566 & G & A & -0.0122 & 0.0294 \\ 
+rs3128117 &     1 & 944564 & C & T & -0.0208 & 0.0278 \\ 
+rs1891906 &     1 & 950243 & C & A & -0.0264 & 0.0260 \\ 
+rs2710888 &     1 & 959842 & T & C & -0.0439 & 0.0297 \\ 
+rs4970393 &     1 & 962606 & G & A & -0.0252 & 0.0233 \\ 
+rs7526076 &     1 & 998395 & A & G & -0.0512 & 0.0229 \\ 
+  \vdots & \vdots &   \vdots & \vdots & \vdots & \vdots & \vdots  \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+
+## 3. Testing gene-trait associations with GWAS sumary statistics
 
 ```{r, fig.show='hold', eval=FALSE}
 # eQTL genotype file
@@ -177,7 +257,6 @@ file3 <- "1000G"
 # eQTL gene expression files
 file4 <- c("Skin_Sun_Exposed_Lower_leg_gene_expression.txt",
            "Whole_Blood_gene_expression.txt")
-
 
 # eQTL covariates file. Since normalized GE is provided, we do not need this file.
 file5 <- ""
@@ -200,10 +279,41 @@ There are other three arguments.
 
 - corNum sets the number of threads the program will use. 
 
+## 4. Testing tissue-specific effects with GWAS individual data  
+```{r, fig.show='hold', eval=FALSE}
+# eQTL genotype file
+file1 <- "GTEx_qc"
 
+# GWAS summary statistic file
+file2 <- "LOAD.txt"
 
-# Replicate simulation results in Shi et al. (2019)
-All the simulation results can be reproduced by using the code at simulation. Before running simulation to reproduce the results, please familarize yourself with **TisCoMM** using 'TisCoMM' vignette. 
+# reference panel file
+file3 <- "1000G"
+
+# eQTL gene expression files
+file4 <- c("Skin_Sun_Exposed_Lower_leg_gene_expression.txt",
+           "Whole_Blood_gene_expression.txt")
+
+# eQTL covariates file. Since normalized GE is provided, we do not need this file.
+file5 <- ""
+
+# genes (TargetID) on which we want to perform tissue-specific test.
+targetList  <- c("ENSG00000196666.3"
+                 "ENSG00000213619.5"
+                 "ENSG00000149187.13")
+
+lam     <- 0.95
+bw      <- 5e5
+coreNum <- 24
+
+fit <- mammotSS_part_paral(file1, file2, file3, file4, file5, 
+                      targetList, lam, bw, coreNum)
+
+```
+Compared with the input for gene-trait association test, there is a new arguments "targetList". It is a character vecter containing genes' names. Note that it should be the same identifiers as "targetID" in the eQTL data. In general, You can perform the tissue-specific test on any genes. Usually, we would like to focus on genes which are significantly associated with the trait.
+
+# Replicate simulation results in Shi et al. (2020)
+All the simulation results can be reproduced by using the code at [simulation](https://github.com/XingjieShi/TisCoMM/tree/master/simulation). Before running simulation to reproduce the results, please familarize yourself with **TisCoMM** using 'TisCoMM User Manual'. 
 
 1. Simulation results for multi-tissue joint can be reproduced by following steps:
 
@@ -220,4 +330,4 @@ All the simulation results can be reproduced by using the code at simulation. Be
 
  
 ## Reference
-[Shi et al (2019). A tissue-specific collaborative mixed model for jointly analyzing multiple tissues in transcriptome-wide association studies](https://www.biorxiv.org/content/10.1101/789396v3.full)
+[Shi et al (2020). A tissue-specific collaborative mixed model for jointly analyzing multiple tissues in transcriptome-wide association studies](https://www.biorxiv.org/content/10.1101/789396v3.full)

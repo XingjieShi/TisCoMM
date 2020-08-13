@@ -1,10 +1,334 @@
-setwd("~/Documents/Cloud/Research/CoMM/package/mammot/src")
+# check some equations for block matrix#
+AR = function(rho, p) {#
+    outer(1:p, 1:p, FUN = function(x, y) rho^(abs(x - y))) #
+}
+m = 400#
+        n = 5000#
+        p = 300
+x <- rmvnorm(m, mean=rep(0, p), sigma = AR(rhoX, p))
+library(mvtnorm)
+x <- rmvnorm(m, mean=rep(0, p), sigma = AR(rhoX, p))
+rhoX <- 0.3
+x <- rmvnorm(m, mean=rep(0, p), sigma = AR(rhoX, p))
+x1 <- x2snp(x)
+# transform Normal x to SNPs.#
+x2snp = function (X)#
+{#
+    n <- nrow(X)#
+    p <- ncol(X)#
+    maf <- runif(p, 0.05, 0.5)#
+    AAprob = maf^2;#
+    Aaprob = 2 * maf * (1-maf);#
+    quanti = cbind(1-Aaprob-AAprob, 1- AAprob)  ## attention#
+    snp = matrix(0, n, p);#
+    for (j in 1:p){#
+        cutoff = qnorm(quanti[j,]);#
+        snp[X[,j] <  cutoff[1], j] = 0;#
+        snp[X[,j] >= cutoff[1]  & X[,j] < cutoff[2],j] = 1;  ## attention#
+        snp[X[,j] >= cutoff[2], j] = 2;#
+    }#
+    snp#
+}
+x1 <- x2snp(x)
+dim(x1)
+# transform Normal x to SNPs.#
+x2snp = function (X)#
+{#
+    n <- nrow(X)#
+    p <- ncol(X)#
+    #maf <- runif(p, 0.05, 0.5)#
+    maf <- runif(p, 0.001, 0.01)#
+    AAprob = maf^2;#
+    Aaprob = 2 * maf * (1-maf);#
+    quanti = cbind(1-Aaprob-AAprob, 1- AAprob)  ## attention#
+    snp = matrix(0, n, p);#
+    for (j in 1:p){#
+        cutoff = qnorm(quanti[j,]);#
+        snp[X[,j] <  cutoff[1], j] = 0;#
+        snp[X[,j] >= cutoff[1]  & X[,j] < cutoff[2],j] = 1;  ## attention#
+        snp[X[,j] >= cutoff[2], j] = 2;#
+    }#
+    snp#
+}
+x2 <- x2snp(x)
+dim(x2)
+x2[1:10,1:10]
+colSums(x1)
+colSums(x2)
+x2snp
+m = 400#
+        n = 5000#
+        p = 300#
+#
+        # genotypes in eQTL#
+        x1 <- x2snp(rmvnorm(m, mean=rep(0, p), sigma = AR(rhoX, p)))
+colSums(x1)
+sum(colSums(x2) == 1)
+m = 400#
+        n = 5000#
+        p = 300#
+        n_p <- 400#
+        # genotypes in eQTL#
+        x <- x2snp(rmvnorm(m + n + n_p, mean=rep(0, p), sigma = AR(rhoX, p)))
+m
+(m+1)
+(m+n)
+(m+n+n_p)
+(m+n+1)
+x1 <- x[1:m, ]#
+        x2 <- x[(m+1):(m+n), ]#
+        x3 <- x[(m+n+1):(m+n+n_p), ]
+x1 <- x[1:m, ]
+which(colSums(x1) == 0)
+zeroSNP <- c(which(colSums(x1) == 0), which(colSums(x2) == 0), which(colSums(x3) == 0))
+zeroSNP
+zeroSNP <- unique(c(which(colSums(x1) == 0), #
+                            which(colSums(x2) == 0), #
+                            which(colSums(x3) == 0)))
+zeroSNP
+x1 <- x[1:m, ]#
+        x2 <- x[(m+1):(m+n), ]#
+        x3 <- x[(m+n+1):(m+n+n_p), ]#
+#
+        zeroSNP <- unique(c(which(colSums(x1) == 0), #
+                            which(colSums(x2) == 0), #
+                            which(colSums(x3) == 0)))
+which(colSums(x1) == 0)
+which(colSums(x2) == 0)
+which(colSums(x3) == 0)
+unique(c(which(colSums(x1) == 0), #
+                            which(colSums(x2) == 0), #
+                            which(colSums(x3) == 0)))
+which(colSums(x2) == 0)
+which(colSums(x3) == 0)
+length(zeroSNP)
+x1 <- x[1:m, ] # eqtl#
+        x2 <- x[(m+1):(m+n), ] # gwas#
+        x3 <- x[(m+n+1):(m+n+n_p), ] # reference #
+#
+        zeroSNP <- unique(c(which(colSums(x1) == 0), #
+                            which(colSums(x2) == 0), #
+                            which(colSums(x3) == 0)))#
+#
+        # remove variables with zero variances.#
+        if  (length(zeroSNP) != 0)  {#
+            x1 <- x1[, -zeroSNP]#
+            x1 <- x2[, -zeroSNP]#
+            x1 <- x3[, -zeroSNP]#
+        }
+colSums(x1)
+nolc(x1)
+p <- ncol(x1)
+ncol(x1)
+p <- ncol(x1)#
+        x1mean <- matrix(rep(colMeans(x1), m), ncol=p, byrow = T)#
+        x1 <- (x1 - x1mean)
+x2mean <- matrix(rep(colMeans(x2), n), ncol=p, byrow = T)#
+        x2 <- (x2 - x2mean)
+if  (length(zeroSNP) != 0)  {#
+            x1 <- x1[, -zeroSNP]#
+            x1 <- x2[, -zeroSNP]#
+            x1 <- x3[, -zeroSNP]#
+        }
+x1 <- x[1:m, ] # eqtl#
+        x2 <- x[(m+1):(m+n), ] # gwas#
+        x3 <- x[(m+n+1):(m+n+n_p), ] # reference #
+#
+        zeroSNP <- unique(c(which(colSums(x1) == 0), #
+                            which(colSums(x2) == 0), #
+                            which(colSums(x3) == 0)))#
+#
+        # remove variables with zero variances.#
+        if  (length(zeroSNP) != 0)  {#
+            x1 <- x1[, -zeroSNP]#
+            x1 <- x2[, -zeroSNP]#
+            x1 <- x3[, -zeroSNP]#
+        }
+p <- ncol(x1)#
+        x1mean <- matrix(rep(colMeans(x1), m), ncol=p, byrow = T)#
+        x1 <- (x1 - x1mean)
+x2mean <- matrix(rep(colMeans(x2), n), ncol=p, byrow = T)#
+        x2 <- (x2 - x2mean)
+n
+p
+x3mean <- matrix(rep(colMeans(x3), n_p), ncol=p, byrow = T)#
+        x3 <- (x3 - x3mean)#/x3sd/sqrt(n_p)
+dim(x1)
+dim(x2)
+dim(x3)
+length(zeroSNP)
+length(zeroSNP) != 0
+x1 <- x[1:m, ] # eqtl#
+        x2 <- x[(m+1):(m+n), ] # gwas#
+        x3 <- x[(m+n+1):(m+n+n_p), ] # reference #
+#
+        zeroSNP <- unique(c(which(colSums(x1) == 0), #
+                            which(colSums(x2) == 0), #
+                            which(colSums(x3) == 0)))#
+#
+        # remove variables with zero variances.#
+        if  (length(zeroSNP) != 0)  {#
+            x1 <- x1[, -zeroSNP]#
+            x1 <- x2[, -zeroSNP]#
+            x1 <- x3[, -zeroSNP]#
+        }
+dim(x2)
+length(zeroSNP) != 0
+zeroSNP
+x <- x2snp(rmvnorm(m + n + n_p, mean=rep(0, p), sigma = AR(rhoX, p)))#
+#
+        x1 <- x[1:m, ] # eqtl#
+        x2 <- x[(m+1):(m+n), ] # gwas#
+        x3 <- x[(m+n+1):(m+n+n_p), ] # reference #
+#
+        zeroSNP <- unique(c(which(colSums(x1) == 0), #
+                            which(colSums(x2) == 0), #
+                            which(colSums(x3) == 0)))#
+#
+        # remove variables with zero variances.#
+        if  (length(zeroSNP) != 0)  {#
+            x1 <- x1[, -zeroSNP]#
+            x2 <- x2[, -zeroSNP]#
+            x3 <- x3[, -zeroSNP]#
+        }#
+        p <- ncol(x1)#
+        x1mean <- matrix(rep(colMeans(x1), m), ncol=p, byrow = T)#
+        x1 <- (x1 - x1mean)
+x2mean <- matrix(rep(colMeans(x2), n), ncol=p, byrow = T)#
+        x2 <- (x2 - x2mean)
+x3mean <- matrix(rep(colMeans(x3), n_p), ncol=p, byrow = T)#
+        x3 <- (x3 - x3mean)#/x3sd/sqrt(n_p)
+b <- rnorm(p)#
+        W <- matrix(0, nrow = p, ncol=Ti)#
+        for (j in 1:Ti) #
+            W[sample(p, s*p, replace=FALSE),j] <- 1#
+        B <-  diag(b) %*% W#
+        lp <- x1 %*% B
+h_z = 0.01; h_c = 0.05; s = 0.1; rhoX = 0.8
+b <- rnorm(p)
+W <- matrix(0, nrow = p, ncol=Ti)#
+        for (j in 1:Ti) #
+            W[sample(p, s*p, replace=FALSE),j] <- 1#
+        B <-  diag(b) %*% W#
+        lp <- x1 %*% B
+Ti = 10
+rhoE = 0.5
+W <- matrix(0, nrow = p, ncol=Ti)#
+        for (j in 1:Ti) #
+            W[sample(p, s*p, replace=FALSE),j] <- 1#
+        B <-  diag(b) %*% W#
+        lp <- x1 %*% B
+if (Ti != 1){#
+            sd.lp = diag(sqrt(diag(var(lp)) * (1/h_c - 1)))#
+            Ve = sd.lp %*% AR(rhoE, Ti) %*% sd.lp#
+            E <- rmvnorm(m, mean = rep(0, Ti), sigma = Ve)#
+        } else {#
+            sd.lp = sqrt(diag(var(lp)* (1/h_c - 1)))#
+            E <- rnorm(m, sd = sd.lp)#
+        }#
+        y <- lp + E
+if (h_z == 0) z <- rnorm(n, 0, sqrt(3)) else {#
+            a <- runif(Ti, -1, 1)#
+            lp_z <- x2 %*% B %*% a#
+            #h_z <- .01#
+            sig2 <- c(var(lp_z)) * ((1-h_z)/h_z)#
+            z <- lp_z + rnorm(n, 0, sqrt(sig2))#
+        }
+maxIter = 3000
+w <- matrix(1, nrow=p, ncol=1)
+if(Ti != 1) w = adw(x1, y)
+libr
+library(devtools)#
+install_github("XingjieShi/TisCoMM")
+getwd()
+setwd("./TisCoMM")
+packagesetwd("~/Documents/Cloud/Research/CoMM/")
+setwd("~/Documents/Cloud/Research/CoMM/")
+system("R CMD INSTALL TisCoMM_0.1.0.tar.gz")
+getwd()
+setwd("package/")
+system("R CMD INSTALL TisCoMM_0.1.0.tar.gz")
+library(TisCoMM)
+if(Ti != 1) w = adw(x1, y)
+adw <- function(x, y){#
+    w <- matrix(0, nrow = ncol(x), ncol = ncol(y))#
+    for (i in 1:ncol(x))#
+        {#
+            for (j in 1:ncol(y))#
+            {#
+                w[i, j] <- coefficients(lm(y[,j]~x[,i]))[2]#
+            }#
+        }#
+    w#
+}
+if(Ti != 1) w = adw(x1, y)
+fit_PX <- mammot_PXem(x1, y, x2, z, w, FALSE, PX, maxIter=maxIter)#
+        fit_PX_0 <- mammot_PXem(x1, y, x2, z, w, TRUE, PX, maxIter=maxIter)#
+        chisq <- 2*(max(fit_PX$loglik) - max(fit_PX_0$loglik))
+mammot_PXem
+fit_PX <- mammot_PXem(x1, y, x2, z, w, FALSE, PX, maxIter=maxIter)
+?TisCoMM
+library(TisCoMM)
+library(mammot)
 library(Rcpp)
-sourceCpp("plinkfun.cpp")
-sourceCpp("mammot.cpp")
-sourceCpp("mammot.cpp")
-install.packages("readR")
-install.packages("readr")
-install.packages("hms")
-install.packages("tidyverse")
-devtools::install_github("tidyverse/hms")
+library(RcppArmadillo)
+getwd()
+setwd("TisCoMM/src/")
+sourceCpp("PXem.cpp")
+sourceCpp("PXem.cpp")
+fit_PX <- mammot_PXem(x1, y, x2, z, w, FALSE, PX, maxIter=maxIter)
+PX <- T
+fit_PX <- mammot_PXem(x1, y, x2, z, w, FALSE, PX, maxIter=maxIter)
+fit_PX_0 <- mammot_PXem(x1, y, x2, z, w, TRUE, PX, maxIter=maxIter)
+2*(max(fit_PX$loglik) - max(fit_PX_0$loglik))
+sourceCpp("PXem_ss.cpp")
+lam = 0.95#
+        sumx3 = apply(x3*x3, 2, sum)#
+        RR = matrix(0, p, p);#
+        for (i1 in 1:p){#
+            for (j1 in 1:p){#
+                RR[i1, j1] = t(x3[,i1])%*%x3[,j1]/sqrt(sumx3[i1]*sumx3[j1])                        #
+            }#
+        }#
+        R = RR*lam + (1 - lam)*diag(p)
+hatmu = matrix(0, p, 1)#
+        hats  = matrix(0, p, 1)#
+        for (j in 1:p){#
+            fm <- lm(z ~ 1 + x2[, j]);#
+            hatmu[j] <- summary(fm)$coefficients[2,1]#
+            hats[j]  <- summary(fm)$coefficients[2,2];#
+        }
+S <- diag(c(hats))#
+        SR <- S %*% R #
+        V <- SR %*% S#
+        L <- chol(V)#
+        Ltinv <- solve(t(L))#
+        gam_L <- Ltinv %*% hatmu#
+        U <- Ltinv %*% SR %*% solve(S)
+fit_ss   <- mammot_PXem_ss(x1, y, U, gam_L, w, FALSE, PX, maxIter=maxIter)#
+        fit_ss_0 <- mammot_PXem_ss(x1, y, U, gam_L, w, TRUE,  PX, maxIter=maxIter)
+2*(max(fit_ss$loglik) - max(fit_ss_0$loglik))
+pchisq(chisq, Ti, lower.tail=F)
+chisq  <- 2*(max(fit_ss$loglik) - max(fit_ss_0$loglik))
+pchisq(chisq, Ti, lower.tail=F)
+chisq <- 2*(max(fit_PX$loglik) - max(fit_PX_0$loglik))
+pchisq(chisq, Ti, lower.tail=F)
+Rep
+Rep = 10
+i=1
+chisq[i, 1] <- 2*(max(fit_PX$loglik) - max(fit_PX_0$loglik))
+chisq[i, 1]
+chisq
+chisq <- matrix(0, ncol=2, nrow=Rep)
+2*(max(fit_PX$loglik) - max(fit_PX_0$loglik))
+chisq[i, 1]
+chisq
+chisq[i, 1] <- 2*(max(fit_PX$loglik) - max(fit_PX_0$loglik))
+chisq[i, 1]
+chisq[i, 1] <- 2*(max(fit_PX$loglik) - max(fit_PX_0$loglik))#
+        pvalue[i, 1] <- pchisq(chisq[i, 1], Ti, lower.tail=F)
+pchisq(chisq[i, 1], Ti, lower.tail=F)
+chisq[i, 2]  <- 2*(max(fit_ss$loglik) - max(fit_ss_0$loglik))
+chisq[i, 2]
+chisq
+pchisq(chisq[i, 2], Ti, lower.tail=F)
