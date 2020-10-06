@@ -87,7 +87,7 @@ adw <- function(x, y){
 
         	yhat2_pca <- summary(prcomp(yhat2, center = TRUE, scale. = TRUE))
         	ind_top <- which(yhat2_pca$importance[2, 1]/yhat2_pca$importance[2, ] < cond)
-        	pc_top <- yhat2_pca$x
+        	pc_top <- yhat2_pca$x[, ind_top]
         	twas <- summary(lm(z ~ pc_top))
         	alpha <- twas$coefficients[-1]
         	pval <- pf(twas$fstatistic[1],twas$fstatistic[2],twas$fstatistic[3],lower.tail=FALSE)
