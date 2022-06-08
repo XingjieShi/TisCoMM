@@ -6,9 +6,14 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // mammot_PXem
 List mammot_PXem(arma::mat x1, arma::mat y, arma::mat x2, arma::vec z, arma::mat w, bool constr, bool PX, int maxIter);
-RcppExport SEXP _mammot_mammot_PXem(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
+RcppExport SEXP _TisCoMM_mammot_PXem(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -26,7 +31,7 @@ END_RCPP
 }
 // ADW
 arma::mat ADW(const arma::mat& x, const arma::mat& y);
-RcppExport SEXP _mammot_ADW(SEXP xSEXP, SEXP ySEXP) {
+RcppExport SEXP _TisCoMM_ADW(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -38,7 +43,7 @@ END_RCPP
 }
 // mammot_part_test
 List mammot_part_test(arma::mat x1, arma::mat y, arma::mat x2, arma::vec z, arma::mat w, arma::vec constrFactor, bool PX, int maxIter);
-RcppExport SEXP _mammot_mammot_part_test(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
+RcppExport SEXP _TisCoMM_mammot_part_test(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -56,7 +61,7 @@ END_RCPP
 }
 // mammotSS_part_test
 List mammotSS_part_test(arma::mat x1, arma::mat y, arma::mat x2, arma::vec z, arma::mat w, arma::vec constrFactor, bool PX, int maxIter);
-RcppExport SEXP _mammot_mammotSS_part_test(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
+RcppExport SEXP _TisCoMM_mammotSS_part_test(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -74,7 +79,7 @@ END_RCPP
 }
 // mammot_PXem_part
 List mammot_PXem_part(arma::mat x1, arma::mat y, arma::mat x2, arma::vec z, arma::mat w, arma::vec constrFactor, bool PX, int maxIter);
-RcppExport SEXP _mammot_mammot_PXem_part(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
+RcppExport SEXP _TisCoMM_mammot_PXem_part(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -92,7 +97,7 @@ END_RCPP
 }
 // mammotSS_part_est
 List mammotSS_part_est(arma::mat x1, arma::mat y, arma::mat x2, arma::vec z, arma::mat w, arma::mat B_hat, arma::vec mu, arma::mat Sigma, double sigmab, arma::mat Ve, arma::vec alpha, arma::vec constrFactor, bool PX, int maxIter);
-RcppExport SEXP _mammot_mammotSS_part_est(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP B_hatSEXP, SEXP muSEXP, SEXP SigmaSEXP, SEXP sigmabSEXP, SEXP VeSEXP, SEXP alphaSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
+RcppExport SEXP _TisCoMM_mammotSS_part_est(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP B_hatSEXP, SEXP muSEXP, SEXP SigmaSEXP, SEXP sigmabSEXP, SEXP VeSEXP, SEXP alphaSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -116,7 +121,7 @@ END_RCPP
 }
 // mammotSS_PXem_part
 List mammotSS_PXem_part(arma::mat x1, arma::mat y, arma::mat x2, arma::vec z, arma::mat w, arma::vec constrFactor, bool PX, int maxIter);
-RcppExport SEXP _mammot_mammotSS_PXem_part(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
+RcppExport SEXP _TisCoMM_mammotSS_PXem_part(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrFactorSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -134,7 +139,7 @@ END_RCPP
 }
 // lmm_pxem
 Rcpp::List lmm_pxem(const arma::vec y, const arma::mat w, const arma::mat x, const int maxIter);
-RcppExport SEXP _mammot_lmm_pxem(SEXP ySEXP, SEXP wSEXP, SEXP xSEXP, SEXP maxIterSEXP) {
+RcppExport SEXP _TisCoMM_lmm_pxem(SEXP ySEXP, SEXP wSEXP, SEXP xSEXP, SEXP maxIterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -148,7 +153,7 @@ END_RCPP
 }
 // mammot_PXem_ss
 List mammot_PXem_ss(arma::mat x1, arma::mat y, arma::mat x2, arma::vec z, arma::mat w, bool constr, bool PX, int maxIter);
-RcppExport SEXP _mammot_mammot_PXem_ss(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
+RcppExport SEXP _TisCoMM_mammot_PXem_ss(SEXP x1SEXP, SEXP ySEXP, SEXP x2SEXP, SEXP zSEXP, SEXP wSEXP, SEXP constrSEXP, SEXP PXSEXP, SEXP maxIterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -164,52 +169,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// getColNum_Header
-Rcpp::List getColNum_Header(std::string filename, char delimiter);
-RcppExport SEXP _mammot_getColNum_Header(SEXP filenameSEXP, SEXP delimiterSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
-    Rcpp::traits::input_parameter< char >::type delimiter(delimiterSEXP);
-    rcpp_result_gen = Rcpp::wrap(getColNum_Header(filename, delimiter));
-    return rcpp_result_gen;
-END_RCPP
-}
-// dataLoader
-Rcpp::List dataLoader(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringname5, int whCol);
-RcppExport SEXP _mammot_dataLoader(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP whColSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type stringname1(stringname1SEXP);
-    Rcpp::traits::input_parameter< std::string >::type stringname2(stringname2SEXP);
-    Rcpp::traits::input_parameter< std::vector<std::string> >::type stringname3(stringname3SEXP);
-    Rcpp::traits::input_parameter< std::string >::type stringname4(stringname4SEXP);
-    Rcpp::traits::input_parameter< std::string >::type stringname5(stringname5SEXP);
-    Rcpp::traits::input_parameter< int >::type whCol(whColSEXP);
-    rcpp_result_gen = Rcpp::wrap(dataLoader(stringname1, stringname2, stringname3, stringname4, stringname5, whCol));
-    return rcpp_result_gen;
-END_RCPP
-}
-// dataLoaderSS
-Rcpp::List dataLoaderSS(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringnameSS);
-RcppExport SEXP _mammot_dataLoaderSS(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringnameSSSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type stringname1(stringname1SEXP);
-    Rcpp::traits::input_parameter< std::string >::type stringname2(stringname2SEXP);
-    Rcpp::traits::input_parameter< std::vector<std::string> >::type stringname3(stringname3SEXP);
-    Rcpp::traits::input_parameter< std::string >::type stringname4(stringname4SEXP);
-    Rcpp::traits::input_parameter< std::string >::type stringnameSS(stringnameSSSEXP);
-    rcpp_result_gen = Rcpp::wrap(dataLoaderSS(stringname1, stringname2, stringname3, stringname4, stringnameSS));
-    return rcpp_result_gen;
-END_RCPP
-}
 // mammot
 Rcpp::List mammot(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringname5, int whCol, int bw);
-RcppExport SEXP _mammot_mammot(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP whColSEXP, SEXP bwSEXP) {
+RcppExport SEXP _TisCoMM_mammot(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP whColSEXP, SEXP bwSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -226,7 +188,7 @@ END_RCPP
 }
 // mammot_paral
 Rcpp::List mammot_paral(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringname5, int whCol, int bw, int coreNum);
-RcppExport SEXP _mammot_mammot_paral(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP whColSEXP, SEXP bwSEXP, SEXP coreNumSEXP) {
+RcppExport SEXP _TisCoMM_mammot_paral(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP whColSEXP, SEXP bwSEXP, SEXP coreNumSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -244,7 +206,7 @@ END_RCPP
 }
 // mammotSS
 Rcpp::List mammotSS(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringname5, double lam, int bw);
-RcppExport SEXP _mammot_mammotSS(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP lamSEXP, SEXP bwSEXP) {
+RcppExport SEXP _TisCoMM_mammotSS(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP lamSEXP, SEXP bwSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -261,7 +223,7 @@ END_RCPP
 }
 // mammotSS_paral
 Rcpp::List mammotSS_paral(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringname5, double lam, int bw, int coreNum);
-RcppExport SEXP _mammot_mammotSS_paral(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP lamSEXP, SEXP bwSEXP, SEXP coreNumSEXP) {
+RcppExport SEXP _TisCoMM_mammotSS_paral(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP lamSEXP, SEXP bwSEXP, SEXP coreNumSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -279,7 +241,7 @@ END_RCPP
 }
 // mammot_part_paral
 Rcpp::List mammot_part_paral(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringname5, CharacterVector targetList, int whCol, int bw, int coreNum);
-RcppExport SEXP _mammot_mammot_part_paral(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP targetListSEXP, SEXP whColSEXP, SEXP bwSEXP, SEXP coreNumSEXP) {
+RcppExport SEXP _TisCoMM_mammot_part_paral(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP targetListSEXP, SEXP whColSEXP, SEXP bwSEXP, SEXP coreNumSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -298,7 +260,7 @@ END_RCPP
 }
 // mammotSS_part_paral
 Rcpp::List mammotSS_part_paral(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringname5, CharacterVector targetList, double lam, int bw, int coreNum);
-RcppExport SEXP _mammot_mammotSS_part_paral(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP targetListSEXP, SEXP lamSEXP, SEXP bwSEXP, SEXP coreNumSEXP) {
+RcppExport SEXP _TisCoMM_mammotSS_part_paral(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP targetListSEXP, SEXP lamSEXP, SEXP bwSEXP, SEXP coreNumSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -315,9 +277,52 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getColNum_Header
+Rcpp::List getColNum_Header(std::string filename, char delimiter);
+RcppExport SEXP _TisCoMM_getColNum_Header(SEXP filenameSEXP, SEXP delimiterSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
+    Rcpp::traits::input_parameter< char >::type delimiter(delimiterSEXP);
+    rcpp_result_gen = Rcpp::wrap(getColNum_Header(filename, delimiter));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dataLoader
+Rcpp::List dataLoader(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringname5, int whCol);
+RcppExport SEXP _TisCoMM_dataLoader(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringname5SEXP, SEXP whColSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type stringname1(stringname1SEXP);
+    Rcpp::traits::input_parameter< std::string >::type stringname2(stringname2SEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type stringname3(stringname3SEXP);
+    Rcpp::traits::input_parameter< std::string >::type stringname4(stringname4SEXP);
+    Rcpp::traits::input_parameter< std::string >::type stringname5(stringname5SEXP);
+    Rcpp::traits::input_parameter< int >::type whCol(whColSEXP);
+    rcpp_result_gen = Rcpp::wrap(dataLoader(stringname1, stringname2, stringname3, stringname4, stringname5, whCol));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dataLoaderSS
+Rcpp::List dataLoaderSS(std::string stringname1, std::string stringname2, std::vector<std::string> stringname3, std::string stringname4, std::string stringnameSS);
+RcppExport SEXP _TisCoMM_dataLoaderSS(SEXP stringname1SEXP, SEXP stringname2SEXP, SEXP stringname3SEXP, SEXP stringname4SEXP, SEXP stringnameSSSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type stringname1(stringname1SEXP);
+    Rcpp::traits::input_parameter< std::string >::type stringname2(stringname2SEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type stringname3(stringname3SEXP);
+    Rcpp::traits::input_parameter< std::string >::type stringname4(stringname4SEXP);
+    Rcpp::traits::input_parameter< std::string >::type stringnameSS(stringnameSSSEXP);
+    rcpp_result_gen = Rcpp::wrap(dataLoaderSS(stringname1, stringname2, stringname3, stringname4, stringnameSS));
+    return rcpp_result_gen;
+END_RCPP
+}
 // read_GWAS
 List read_GWAS(std::string filename, int P);
-RcppExport SEXP _mammot_read_GWAS(SEXP filenameSEXP, SEXP PSEXP) {
+RcppExport SEXP _TisCoMM_read_GWAS(SEXP filenameSEXP, SEXP PSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -329,29 +334,29 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_mammot_mammot_PXem", (DL_FUNC) &_mammot_mammot_PXem, 8},
-    {"_mammot_ADW", (DL_FUNC) &_mammot_ADW, 2},
-    {"_mammot_mammot_part_test", (DL_FUNC) &_mammot_mammot_part_test, 8},
-    {"_mammot_mammotSS_part_test", (DL_FUNC) &_mammot_mammotSS_part_test, 8},
-    {"_mammot_mammot_PXem_part", (DL_FUNC) &_mammot_mammot_PXem_part, 8},
-    {"_mammot_mammotSS_part_est", (DL_FUNC) &_mammot_mammotSS_part_est, 14},
-    {"_mammot_mammotSS_PXem_part", (DL_FUNC) &_mammot_mammotSS_PXem_part, 8},
-    {"_mammot_lmm_pxem", (DL_FUNC) &_mammot_lmm_pxem, 4},
-    {"_mammot_mammot_PXem_ss", (DL_FUNC) &_mammot_mammot_PXem_ss, 8},
-    {"_mammot_getColNum_Header", (DL_FUNC) &_mammot_getColNum_Header, 2},
-    {"_mammot_dataLoader", (DL_FUNC) &_mammot_dataLoader, 6},
-    {"_mammot_dataLoaderSS", (DL_FUNC) &_mammot_dataLoaderSS, 5},
-    {"_mammot_mammot", (DL_FUNC) &_mammot_mammot, 7},
-    {"_mammot_mammot_paral", (DL_FUNC) &_mammot_mammot_paral, 8},
-    {"_mammot_mammotSS", (DL_FUNC) &_mammot_mammotSS, 7},
-    {"_mammot_mammotSS_paral", (DL_FUNC) &_mammot_mammotSS_paral, 8},
-    {"_mammot_mammot_part_paral", (DL_FUNC) &_mammot_mammot_part_paral, 9},
-    {"_mammot_mammotSS_part_paral", (DL_FUNC) &_mammot_mammotSS_part_paral, 9},
-    {"_mammot_read_GWAS", (DL_FUNC) &_mammot_read_GWAS, 2},
+    {"_TisCoMM_mammot_PXem", (DL_FUNC) &_TisCoMM_mammot_PXem, 8},
+    {"_TisCoMM_ADW", (DL_FUNC) &_TisCoMM_ADW, 2},
+    {"_TisCoMM_mammot_part_test", (DL_FUNC) &_TisCoMM_mammot_part_test, 8},
+    {"_TisCoMM_mammotSS_part_test", (DL_FUNC) &_TisCoMM_mammotSS_part_test, 8},
+    {"_TisCoMM_mammot_PXem_part", (DL_FUNC) &_TisCoMM_mammot_PXem_part, 8},
+    {"_TisCoMM_mammotSS_part_est", (DL_FUNC) &_TisCoMM_mammotSS_part_est, 14},
+    {"_TisCoMM_mammotSS_PXem_part", (DL_FUNC) &_TisCoMM_mammotSS_PXem_part, 8},
+    {"_TisCoMM_lmm_pxem", (DL_FUNC) &_TisCoMM_lmm_pxem, 4},
+    {"_TisCoMM_mammot_PXem_ss", (DL_FUNC) &_TisCoMM_mammot_PXem_ss, 8},
+    {"_TisCoMM_mammot", (DL_FUNC) &_TisCoMM_mammot, 7},
+    {"_TisCoMM_mammot_paral", (DL_FUNC) &_TisCoMM_mammot_paral, 8},
+    {"_TisCoMM_mammotSS", (DL_FUNC) &_TisCoMM_mammotSS, 7},
+    {"_TisCoMM_mammotSS_paral", (DL_FUNC) &_TisCoMM_mammotSS_paral, 8},
+    {"_TisCoMM_mammot_part_paral", (DL_FUNC) &_TisCoMM_mammot_part_paral, 9},
+    {"_TisCoMM_mammotSS_part_paral", (DL_FUNC) &_TisCoMM_mammotSS_part_paral, 9},
+    {"_TisCoMM_getColNum_Header", (DL_FUNC) &_TisCoMM_getColNum_Header, 2},
+    {"_TisCoMM_dataLoader", (DL_FUNC) &_TisCoMM_dataLoader, 6},
+    {"_TisCoMM_dataLoaderSS", (DL_FUNC) &_TisCoMM_dataLoaderSS, 5},
+    {"_TisCoMM_read_GWAS", (DL_FUNC) &_TisCoMM_read_GWAS, 2},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_mammot(DllInfo *dll) {
+RcppExport void R_init_TisCoMM(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

@@ -2,51 +2,39 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 mammot_PXem <- function(x1, y, x2, z, w, constr, PX, maxIter) {
-    .Call(`_mammot_mammot_PXem`, x1, y, x2, z, w, constr, PX, maxIter)
+    .Call(`_TisCoMM_mammot_PXem`, x1, y, x2, z, w, constr, PX, maxIter)
 }
 
 ADW <- function(x, y) {
-    .Call(`_mammot_ADW`, x, y)
+    .Call(`_TisCoMM_ADW`, x, y)
 }
 
 mammot_part_test <- function(x1, y, x2, z, w, constrFactor, PX, maxIter) {
-    .Call(`_mammot_mammot_part_test`, x1, y, x2, z, w, constrFactor, PX, maxIter)
+    .Call(`_TisCoMM_mammot_part_test`, x1, y, x2, z, w, constrFactor, PX, maxIter)
 }
 
 mammotSS_part_test <- function(x1, y, x2, z, w, constrFactor, PX, maxIter) {
-    .Call(`_mammot_mammotSS_part_test`, x1, y, x2, z, w, constrFactor, PX, maxIter)
+    .Call(`_TisCoMM_mammotSS_part_test`, x1, y, x2, z, w, constrFactor, PX, maxIter)
 }
 
 mammot_PXem_part <- function(x1, y, x2, z, w, constrFactor, PX, maxIter) {
-    .Call(`_mammot_mammot_PXem_part`, x1, y, x2, z, w, constrFactor, PX, maxIter)
+    .Call(`_TisCoMM_mammot_PXem_part`, x1, y, x2, z, w, constrFactor, PX, maxIter)
 }
 
 mammotSS_part_est <- function(x1, y, x2, z, w, B_hat, mu, Sigma, sigmab, Ve, alpha, constrFactor, PX, maxIter) {
-    .Call(`_mammot_mammotSS_part_est`, x1, y, x2, z, w, B_hat, mu, Sigma, sigmab, Ve, alpha, constrFactor, PX, maxIter)
+    .Call(`_TisCoMM_mammotSS_part_est`, x1, y, x2, z, w, B_hat, mu, Sigma, sigmab, Ve, alpha, constrFactor, PX, maxIter)
 }
 
 mammotSS_PXem_part <- function(x1, y, x2, z, w, constrFactor, PX, maxIter) {
-    .Call(`_mammot_mammotSS_PXem_part`, x1, y, x2, z, w, constrFactor, PX, maxIter)
+    .Call(`_TisCoMM_mammotSS_PXem_part`, x1, y, x2, z, w, constrFactor, PX, maxIter)
 }
 
 lmm_pxem <- function(y, w, x, maxIter) {
-    .Call(`_mammot_lmm_pxem`, y, w, x, maxIter)
+    .Call(`_TisCoMM_lmm_pxem`, y, w, x, maxIter)
 }
 
 mammot_PXem_ss <- function(x1, y, x2, z, w, constr, PX, maxIter) {
-    .Call(`_mammot_mammot_PXem_ss`, x1, y, x2, z, w, constr, PX, maxIter)
-}
-
-getColNum_Header <- function(filename, delimiter) {
-    .Call(`_mammot_getColNum_Header`, filename, delimiter)
-}
-
-dataLoader <- function(stringname1, stringname2, stringname3, stringname4, stringname5, whCol) {
-    .Call(`_mammot_dataLoader`, stringname1, stringname2, stringname3, stringname4, stringname5, whCol)
-}
-
-dataLoaderSS <- function(stringname1, stringname2, stringname3, stringname4, stringnameSS) {
-    .Call(`_mammot_dataLoaderSS`, stringname1, stringname2, stringname3, stringname4, stringnameSS)
+    .Call(`_TisCoMM_mammot_PXem_ss`, x1, y, x2, z, w, constr, PX, maxIter)
 }
 
 #' @title
@@ -114,30 +102,42 @@ NULL
 #' the GWAS plink binary file (bim, bed, fam), gene expression file for eQTL.
 #' @export
 mammot <- function(stringname1, stringname2, stringname3, stringname4, stringname5, whCol, bw) {
-    .Call(`_mammot_mammot`, stringname1, stringname2, stringname3, stringname4, stringname5, whCol, bw)
+    .Call(`_TisCoMM_mammot`, stringname1, stringname2, stringname3, stringname4, stringname5, whCol, bw)
 }
 
 mammot_paral <- function(stringname1, stringname2, stringname3, stringname4, stringname5, whCol, bw, coreNum) {
-    .Call(`_mammot_mammot_paral`, stringname1, stringname2, stringname3, stringname4, stringname5, whCol, bw, coreNum)
+    .Call(`_TisCoMM_mammot_paral`, stringname1, stringname2, stringname3, stringname4, stringname5, whCol, bw, coreNum)
 }
 
 mammotSS <- function(stringname1, stringname2, stringname3, stringname4, stringname5, lam, bw) {
-    .Call(`_mammot_mammotSS`, stringname1, stringname2, stringname3, stringname4, stringname5, lam, bw)
+    .Call(`_TisCoMM_mammotSS`, stringname1, stringname2, stringname3, stringname4, stringname5, lam, bw)
 }
 
 mammotSS_paral <- function(stringname1, stringname2, stringname3, stringname4, stringname5, lam, bw, coreNum) {
-    .Call(`_mammot_mammotSS_paral`, stringname1, stringname2, stringname3, stringname4, stringname5, lam, bw, coreNum)
+    .Call(`_TisCoMM_mammotSS_paral`, stringname1, stringname2, stringname3, stringname4, stringname5, lam, bw, coreNum)
 }
 
 mammot_part_paral <- function(stringname1, stringname2, stringname3, stringname4, stringname5, targetList, whCol, bw, coreNum) {
-    .Call(`_mammot_mammot_part_paral`, stringname1, stringname2, stringname3, stringname4, stringname5, targetList, whCol, bw, coreNum)
+    .Call(`_TisCoMM_mammot_part_paral`, stringname1, stringname2, stringname3, stringname4, stringname5, targetList, whCol, bw, coreNum)
 }
 
 mammotSS_part_paral <- function(stringname1, stringname2, stringname3, stringname4, stringname5, targetList, lam, bw, coreNum) {
-    .Call(`_mammot_mammotSS_part_paral`, stringname1, stringname2, stringname3, stringname4, stringname5, targetList, lam, bw, coreNum)
+    .Call(`_TisCoMM_mammotSS_part_paral`, stringname1, stringname2, stringname3, stringname4, stringname5, targetList, lam, bw, coreNum)
+}
+
+getColNum_Header <- function(filename, delimiter) {
+    .Call(`_TisCoMM_getColNum_Header`, filename, delimiter)
+}
+
+dataLoader <- function(stringname1, stringname2, stringname3, stringname4, stringname5, whCol) {
+    .Call(`_TisCoMM_dataLoader`, stringname1, stringname2, stringname3, stringname4, stringname5, whCol)
+}
+
+dataLoaderSS <- function(stringname1, stringname2, stringname3, stringname4, stringnameSS) {
+    .Call(`_TisCoMM_dataLoaderSS`, stringname1, stringname2, stringname3, stringname4, stringnameSS)
 }
 
 read_GWAS <- function(filename, P) {
-    .Call(`_mammot_read_GWAS`, filename, P)
+    .Call(`_TisCoMM_read_GWAS`, filename, P)
 }
 
